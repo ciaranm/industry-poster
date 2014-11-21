@@ -10,7 +10,7 @@
 \renewcommand*\familydefault{\sfdefault}
 \usepackage[T1]{fontenc}
 
-\title{Industrial Applications of Counting and Colouring Things In}
+\title{Solving Hard Problems by Counting and Colouring Things In}
 \author{Ciaran McCreesh and Patrick Prosser}
 \institute{University of Glasgow, Glasgow, Scotland}
 \titlegraphic{\includegraphics[keepaspectratio=true,scale=2]{UoG_keyline.eps}}
@@ -79,12 +79,7 @@
 
 % Styles for drawings
 
-\tikzset{edge/.style={line width=3pt, color=uofgstone40}}
-\tikzset{bedge/.style={line width=3pt}}
-\tikzset{edgel1/.style={line width=3pt, color=uofgblue}}
-\tikzset{edgel2/.style={line width=3pt, color=uofgblue40}}
-\tikzset{edgel3/.style={line width=3pt, color=uofgtorange}}
-\tikzset{edgel4/.style={line width=3pt, color=uofgtdarkgreen}}
+\tikzset{edge/.style={line width=3pt, color=uofgstone}}
 
 % Colours for the graph lines
 
@@ -223,9 +218,11 @@ coverage.
 
     \medskip
 
-    Despite this, results can be favourable. Our approach uses parallelism to \textbf{introduce
-    diversity} into a search process to offset the weakest choices made by heuristics, so our
-    parallel workers are reducing our commitment to potentially costly early mistakes.
+    Despite this, results can be favourable. Our approach uses parallelism to explicitly
+    \textbf{introduce diversity} into a search process to offset the weakest choices made by
+    heuristics, so our parallel workers are reducing our commitment to potentially costly early
+    mistakes. This is combined with late rebalancing, to give good work balance with low overheads
+    and good scalability.
 }
 
 \block[bodyverticalshift=0cm]{}{
