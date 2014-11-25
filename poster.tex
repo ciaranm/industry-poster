@@ -43,6 +43,8 @@
 \definecolor{uofgtlightgreen}{rgb}{0.615686, 0.788235, 0.729412}
 \definecolor{uofgtyellow}{rgb}{0.85098, 0.827451, 0.643137}
 \definecolor{uofgtorange}{rgb}{0.784314, 0.694118, 0.545098}
+\definecolor{uofgtpurple}{rgb}{0.698039, 0.607843, 0.792157}
+\definecolor{uofgtmauve}{rgb}{0.564706, 0.458824, 0.470588}
 
 \definecolorstyle{UofG}{
 }{
@@ -80,6 +82,7 @@
 % Styles for drawings
 
 \tikzset{edge/.style={line width=3pt, color=uofgstone}}
+\tikzset{ledge/.style={line width=3pt, color=uofgstone40}}
 
 % Colours for the graph lines
 
@@ -170,28 +173,128 @@ respecting conflicts. Industrial uses include call centre staff allocation, sche
 machinery, radio bandwidth allocation, and reducing the impact of vehicle maintenance.
 }
 
-\block{Finding Interesting Patterns}{
-    More generally, the \textbf{maximum common subgraph} problem allows us to see how similar two
-    graphs are, by identifying a large pattern common to both graphs. This is useful in biochemistry
-    and in drug design.
+\begingroup\setlength\intextsep{-18pt}% hack for fixing space above the figure.
+\block{Finding Large, Interconnected Groups of People}{
+\begin{wrapfigure}[10]{r}{0.38\linewidth}
+    \begin{center}\begin{tikzpicture}[scale=1.75]%{{{
+        \newcount \c
+        \foreach \n in {1, ..., 7}{
+            \c=\n \advance\c by -1 \multiply\c by 360 \divide\c by 7 \advance\c by 90
+            \ifthenelse{\n = 1 \OR \n = 2 \OR \n = 3}{
+                \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{
+                \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }
+        }
+
+        \tikzstyle{l1} = [line width=3pt, color=uofgtorange];
+        \tikzstyle{l2} = [line width=3pt, color=uofgtyellow];
+        \tikzstyle{l3} = [line width=3pt, color=uofgtlightgreen];
+        \tikzstyle{l4} = [line width=3pt, color=uofgtpurple];
+
+        \draw [l4] (N3) -- (N4);
+        \draw [l4] (N1) -- (N3);
+        \draw [l2] (N1) -- (N5);
+        \draw [l2] (N2) -- (N3);
+        \draw [l2] (N2) -- (N4);
+        \draw [l2] (N3) -- (N5);
+        \draw [l2] (N4) -- (N5);
+        \draw [l2] (N4) -- (N6);
+        \draw [l2] (N5) -- (N7);
+        \draw [l1] (N1) -- (N2);
+        \draw [l1] (N2) -- (N5);
+        \draw [l3] (N4) -- (N7);
+        \draw [l3] (N5) -- (N6);
+        \draw [l3] (N6) -- (N7);
+        \draw [l3] (N1) -- (N4);
+    \end{tikzpicture}\end{center}
+\end{wrapfigure}
+
+    A \textbf{clique} can be thought of as a group of people, where everyone in the group knows
+    everyone else in the group.  Finding cliques lets us select \textbf{as much of a resource as
+    possible}, respecting compatibility rules. Clique-finding algorithms have been used to improve
+    the reliability of communications and networking protocols, for social media analysis, for
+    verifying electronic circuits, for targeted advertising, and for controlling flying robots.
+
+    \medskip
+
+    We can add additional constraints. For example, we can label edges (representing different
+    common interests, or different companies owning a network connection), and impose a budget on
+    how many different labels we may use. We may also relax the adjacency requirements, requiring
+    only that people be within a certain distance of each other.
 }
+\endgroup % hack for fixing space above the figure
 
 \column{0.38}
 
-\block{Finding Large, Interconnected Groups of People}{
-    Finding cliques lets us select \textbf{as much of a resource as possible}, respecting
-    compatibility rules. Clique-finding algorithms have been used to improve the reliability of
-    communications and networking protocols, for social media analysis, for verifying electronic
-    circuits, and for controlling flying robots.
+\begingroup\setlength\intextsep{-18pt}% hack for fixing space above the figure.
+\block{Finding Interesting Patterns}{
+\begin{wrapfigure}[7]{r}{0.38\linewidth}
+    \begin{center}\begin{tikzpicture}[scale=1.1]%{{{
+        \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (Na) at (1,  0) {1};
+        \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (Nb) at (1, -2) {2};
+        \node[draw, circle, fill=uofgtorange, inner sep=5pt, font=\bfseries] (Nc) at (0, -4) {3};
+        \node[draw, circle, fill=uofgtlightgreen, inner sep=5pt, font=\bfseries] (Nd) at (2, -4) {4};
+
+        \draw [edge] (Na) -- (Nb);
+        \draw [edge] (Nb) -- (Nc);
+        \draw [edge] (Nc) -- (Nd);
+        \draw [edge] (Nb) -- (Nd);
+
+        \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N1) at (4.5,  0) {1};
+        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N2) at (6.5,  0) {2};
+        \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (N3) at (4.5, -2) {3};
+        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N4) at (6.5, -2) {4};
+        \node[draw, circle, fill=uofgtorange, inner sep=5pt, font=\bfseries] (N5) at (4.5, -4) {5};
+        \node[draw, circle, fill=uofgtlightgreen, inner sep=5pt, font=\bfseries] (N6) at (6.5, -4) {6};
+
+        \draw [ledge] (N1) -- (N2);
+        \draw [edge] (N1) -- (N3);
+        \draw [ledge] (N1) -- (N4);
+        \draw [ledge] (N2) -- (N4);
+        \draw [edge] (N3) -- (N5);
+        \draw [edge] (N3) -- (N6);
+        \draw [ledge] (N4) -- (N6);
+        \draw [edge] (N5) -- (N6);
+        \draw [ledge] (N2) to [in=45, out=315] (N6);
+
+    \end{tikzpicture}\end{center}
+\end{wrapfigure}
+
+    The \textbf{subgraph isomorphism} problem is to find a small ``pattern'' graph in a big
+    ``target'' graph. This is useful in drug design, in fraud detection, and in fault diagnosis.
+
+    \medskip
+
+    The \textbf{maximum common subgraph} problem finds the largest subgraph common to two bigger
+    graphs. This in turn allows us to see how similar two graphs are. This is useful in computer
+    vision and in biochemistry.
 }
+\endgroup % hack for fixing space above the figure
 
 \block{More Flexibility via Constraint Programming}{
+    These techniques can be used for \emph{any} system where we have some variables, and
+    some constraints between those variables, and we wish to instantiate the variables whilst
+    respecting all the constraints. This is called \textbf{constraint programming}.
+
+    \medskip
 
 Large-scale industrial successes for constraint programming include scheduling airport gate and crew
 allocations, optimising vehicle deliveries, reducing production costs in lumber processing,
 producing greener and more energy-efficient data centres, scheduling the Rosetta / Philae mission
-operations, reducing the cost of an invasion, and organising sporting seasons for optimal TV
-coverage.
+operations, designing a national railway system, reducing the cost of an invasion, and organising
+sporting seasons for optimal TV coverage. Constraint programming is also extremely good for solving
+Sudoku puzzles.
+
+\medskip
+
+\begin{center}
+    \includegraphics*[keepaspectratio=true,height=6.5cm]{train.jpg}
+    \hfill
+    \includegraphics*[keepaspectratio=true,height=6.5cm]{comet.jpg}
+    \hfill
+    \includegraphics*[keepaspectratio=true,height=6.5cm]{airport.jpg}
+\end{center}
 }
 
 \column{0.24}
@@ -211,7 +314,7 @@ coverage.
     \medskip
 
     In general, we do this by splitting problems up into evenly sized, independent pieces of work,
-    which may be evaluated independently in parallel. Unfortunately combinatorial optimisation
+    which may be evaluated in parallel. However, combinatorial optimisation
     problems tend to be \textbf{highly irregular} (cannot be split into evenly sized pieces) and
     require \textbf{speculative parallelism} (the pieces have dependencies upon each other, and we
     must guess what the answer might be allow parallel evaluation).
@@ -228,10 +331,14 @@ coverage.
 \block[bodyverticalshift=0cm]{}{
     \texttt{c.mccreesh.1@research.gla.ac.uk}
 
+    \flushleft\scriptsize
+    This work was
+    supported by the Engineering and Physical Sciences Research Council [grant number EP/K503058/1].
+
     \smallskip
-    \small
-    This work was supported by the Engineering and Physical Sciences Research Council [grant number
-    EP/K503058/1]
+    Photos: Wikimedia ``VIRM6.jpg'' (Maurits90) (cropped), Wikimedia ``Rosetta and Philae at comet
+    (11206660686).jpg'' (ESA-C. Carreau/ATG medialab), Wikimedia
+    ``A\_bird's\_eye\_view\_of\_Hong\_Kong\_International\_Airport.JPG'' (Wylkie Chan).
 }
 
 \end{columns}
