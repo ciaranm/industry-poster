@@ -1,10 +1,11 @@
 % vim: set spell spelllang=en tw=100 et sw=4 sts=4 :
 
-\documentclass[20pt,a1paper,landscape]{tikzposter}
+\documentclass[a0paper]{tikzposter}
 
 \usepackage{complexity}
 \usepackage{wrapfig}
 \usepackage{microtype}
+\usepackage{gnuplot-lua-tikz}
 
 \usepackage{lmodern}
 \renewcommand*\familydefault{\sfdefault}
@@ -110,10 +111,10 @@
 }
 
 \begin{columns}
-\column{0.38}
+\column{0.5}
 
 \block{Minimising Resource Usage, with Constraints}{
-\begin{wrapfigure}[10]{r}{0.38\linewidth}
+\begin{wrapfigure}[8]{r}{0.38\linewidth}
     \begin{center}\begin{tikzpicture}[scale=1.75]%{{{
         \newcount \c
         \foreach \n in {1, ..., 9}{
@@ -136,20 +137,20 @@
             }
         }
 
-        \draw [edge] (N1) -- (N5); \draw [edge] (N1) -- (N9);
-        \draw [edge] (N2) -- (N5); \draw [edge] (N2) -- (N6); \draw [edge] (N2) -- (N8);
-        \draw [edge] (N3) -- (N4); \draw [edge] (N3) -- (N7);
-        \draw [edge] (N4) -- (N8);
-        \draw [edge] (N5) -- (N6);
-        \draw [edge] (N7) -- (N8);
-        \draw [edge] (N8) -- (N9);
+        \draw [ledge] (N1) -- (N5); \draw [ledge] (N1) -- (N9);
+        \draw [ledge] (N2) -- (N5); \draw [ledge] (N2) -- (N6); \draw [ledge] (N2) -- (N8);
+        \draw [ledge] (N3) -- (N4); \draw [ledge] (N3) -- (N7);
+        \draw [ledge] (N4) -- (N8);
+        \draw [ledge] (N5) -- (N6);
+        \draw [ledge] (N7) -- (N8);
+        \draw [ledge] (N8) -- (N9);
 
-        \draw [edge] (N1) -- (N3);
-        \draw [edge] (N6) -- (N8);
-        \draw [edge] (N1) -- (N6);
-        \draw [edge] (N1) -- (N8);
-        \draw [edge] (N3) -- (N6);
-        \draw [edge] (N3) -- (N8);
+        \draw [ledge] (N1) -- (N3);
+        \draw [ledge] (N6) -- (N8);
+        \draw [ledge] (N1) -- (N6);
+        \draw [ledge] (N1) -- (N8);
+        \draw [ledge] (N3) -- (N6);
+        \draw [ledge] (N3) -- (N8);
     \end{tikzpicture}\end{center}
 \end{wrapfigure}
 
@@ -173,13 +174,53 @@ respecting conflicts. Industrial uses include call centre staff allocation, sche
 machinery, radio bandwidth allocation, and reducing the impact of vehicle maintenance.
 }
 
-\begingroup\setlength\intextsep{-18pt}% hack for fixing space above the figure.
 \block{Finding Large, Interconnected Groups of People}{
+\begin{wrapfigure}[8]{r}{0.38\linewidth}
+    \begin{center}\begin{tikzpicture}[scale=1.75]%{{{
+        \newcount \c
+        \foreach \n in {1, ..., 8}{
+            \c=\n \advance\c by -1 \multiply\c by -360 \divide\c by 8 \advance\c by 112.5
+            \ifthenelse{\n = 1 \OR \n = 3 \OR \n = 6 \OR \n = 7}{
+                \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }{
+                \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
+            }
+        }
+
+        \draw [ledge] (N1) -- (N2);
+        \draw [ledge] (N1) -- (N5);
+        \draw [ledge] (N2) -- (N3);
+        \draw [ledge] (N2) -- (N8);
+        \draw [ledge] (N3) -- (N4);
+        \draw [ledge] (N3) -- (N5);
+        \draw [ledge] (N3) -- (N8);
+        \draw [ledge] (N4) -- (N5);
+        \draw [ledge] (N4) -- (N6);
+        \draw [ledge] (N5) -- (N8);
+        \draw [ledge] (N7) -- (N8);
+
+        \draw [edge] (N1) -- (N3);
+        \draw [edge] (N1) -- (N6);
+        \draw [edge] (N1) -- (N7);
+        \draw [edge] (N3) -- (N6);
+        \draw [edge] (N3) -- (N7);
+        \draw [edge] (N6) -- (N7);
+    \end{tikzpicture}\end{center}
+\end{wrapfigure}
+
+    A \textbf{clique} can be thought of as a group of people, where everyone in the group knows
+    everyone else in the group.  Finding cliques lets us select \textbf{as much of a resource as
+    possible}, respecting compatibility rules. Clique-finding algorithms have been used to improve
+    the reliability of communications and networking protocols, for social media analysis, for
+    verifying electronic circuits, for targeted advertising, and for controlling flying robots.
+
+    \medskip
+
 \begin{wrapfigure}[10]{r}{0.38\linewidth}
     \begin{center}\begin{tikzpicture}[scale=1.75]%{{{
         \newcount \c
         \foreach \n in {1, ..., 7}{
-            \c=\n \advance\c by -1 \multiply\c by 360 \divide\c by 7 \advance\c by 90
+            \c=\n \advance\c by -1 \multiply\c by -360 \divide\c by 7 \advance\c by 90
             \ifthenelse{\n = 1 \OR \n = 2 \OR \n = 3}{
                 \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N\n) at (\the\c:2.2) {\n};
             }{
@@ -210,26 +251,15 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
     \end{tikzpicture}\end{center}
 \end{wrapfigure}
 
-    A \textbf{clique} can be thought of as a group of people, where everyone in the group knows
-    everyone else in the group.  Finding cliques lets us select \textbf{as much of a resource as
-    possible}, respecting compatibility rules. Clique-finding algorithms have been used to improve
-    the reliability of communications and networking protocols, for social media analysis, for
-    verifying electronic circuits, for targeted advertising, and for controlling flying robots.
-
-    \medskip
-
     We can add additional constraints. For example, we can label edges (representing different
     common interests, or different companies owning a network connection), and impose a budget on
     how many different labels we may use. We may also relax the adjacency requirements, requiring
-    only that people be within a certain distance of each other.
+    only that people be within a certain distance of each other, or that all people within a group
+    all but a few other people within a group.
 }
-\endgroup % hack for fixing space above the figure
 
-\column{0.38}
-
-\begingroup\setlength\intextsep{-18pt}% hack for fixing space above the figure.
-\block{Finding Interesting Patterns}{
-\begin{wrapfigure}[7]{r}{0.38\linewidth}
+\block{Picking Out Interesting Patterns in Graphs}{
+\begin{wrapfigure}[6]{r}{0.38\linewidth}
     \begin{center}\begin{tikzpicture}[scale=1.1]%{{{
         \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (Na) at (1,  0) {1};
         \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (Nb) at (1, -2) {2};
@@ -241,12 +271,12 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
         \draw [edge] (Nc) -- (Nd);
         \draw [edge] (Nb) -- (Nd);
 
-        \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N1) at (4.5,  0) {1};
-        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N2) at (6.5,  0) {2};
-        \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (N3) at (4.5, -2) {3};
-        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N4) at (6.5, -2) {4};
-        \node[draw, circle, fill=uofgtorange, inner sep=5pt, font=\bfseries] (N5) at (4.5, -4) {5};
-        \node[draw, circle, fill=uofgtlightgreen, inner sep=5pt, font=\bfseries] (N6) at (6.5, -4) {6};
+        \node[draw, circle, fill=uofgblue40, inner sep=5pt, font=\bfseries] (N1) at (5.5,  0) {1};
+        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N2) at (7.5,  0) {2};
+        \node[draw, circle, fill=uofgblue, inner sep=5pt, font=\bfseries] (N3) at (5.5, -2) {3};
+        \node[draw, circle, fill=white, inner sep=5pt, font=\bfseries] (N4) at (7.5, -2) {4};
+        \node[draw, circle, fill=uofgtorange, inner sep=5pt, font=\bfseries] (N5) at (5.5, -4) {5};
+        \node[draw, circle, fill=uofgtlightgreen, inner sep=5pt, font=\bfseries] (N6) at (7.5, -4) {6};
 
         \draw [ledge] (N1) -- (N2);
         \draw [edge] (N1) -- (N3);
@@ -264,13 +294,15 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
     The \textbf{subgraph isomorphism} problem is to find a small ``pattern'' graph in a big
     ``target'' graph. This is useful in drug design, in fraud detection, and in fault diagnosis.
 
-    \medskip
+    \vspace{1em}
 
     The \textbf{maximum common subgraph} problem finds the largest subgraph common to two bigger
     graphs. This in turn allows us to see how similar two graphs are. This is useful in computer
     vision and in biochemistry.
 }
-\endgroup % hack for fixing space above the figure
+
+
+\column{0.5}
 
 \block{More Flexibility via Constraint Programming}{
     These techniques can be used for \emph{any} system where we have some variables, and
@@ -279,26 +311,88 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
 
     \medskip
 
-Large-scale industrial successes for constraint programming include scheduling airport gate and crew
-allocations, optimising vehicle deliveries, reducing production costs in lumber processing,
-producing greener and more energy-efficient data centres, scheduling the Rosetta / Philae mission
-operations, designing a national railway system, reducing the cost of an invasion, and organising
-sporting seasons for optimal TV coverage. Constraint programming is also extremely good for solving
-Sudoku puzzles.
+Large-scale industrial successes for constraint programming include:
+\begin{itemize}
+    \item Timetabling a national railway system.
+    \item Improving vehicle delivery routes.
+    \item Reducing production costs in lumber processing.
+    \item Producing greener and more energy-efficient data centres.
+    \item Scheduling the Rosetta / Philae mission operations.
+    \item Reducing the cost of an invasion.
+    \item Scheduling airport gate and crew allocations.
+    \item Organising sporting seasons for optimal TV coverage.
+\end{itemize}
 
-\medskip
+\vspace{1em}
 
 \begin{center}
-    \includegraphics*[keepaspectratio=true,height=6.5cm]{train.jpg}
+    \includegraphics*[keepaspectratio=true,height=8.5cm]{train.jpg}
     \hfill
-    \includegraphics*[keepaspectratio=true,height=6.5cm]{comet.jpg}
+    \includegraphics*[keepaspectratio=true,height=8.5cm]{comet.jpg}
     \hfill
-    \includegraphics*[keepaspectratio=true,height=6.5cm]{airport.jpg}
+    \includegraphics*[keepaspectratio=true,height=8.5cm]{airport.jpg}
 \end{center}
+
+\vspace{1em}
+
+Constraint programming toolkits are also better than you at solving Sudoku puzzles: groups of
+variables which must be ``all different'' form the core of many interesting applications, and
+network flow algorithms give powerful, efficient inference for these constraints.
+
+\vspace{1em}
+
+\begin{center}\begin{tikzpicture}
+\newcounter{row}
+\newcounter{col}
+
+\newcommand\setrow[9]{
+    \setcounter{col}{1}
+    \foreach \n in {#1, #2, #3, #4, #5, #6, #7, #8, #9} {
+        \newcount \x
+        \newcount \y
+        \x=\value{col}
+        \advance \x by -1
+        \multiply \x by 3
+        \y=9
+        \advance \y by -\value{row}
+        \multiply \y by 3
+        \node[anchor=center] at ($(\x + 1.5, \y + 1.5)$) {\huge\n};
+        \stepcounter{col}
+    }
+    \stepcounter{row}
 }
 
-\column{0.24}
-\block{Research Goals}{
+\draw[very thick, scale=3, color=uofgstone40] (0, 0) grid (9, 9);
+\draw[very thick, scale=9, color=uofgstone] (0, 0) grid (3, 3);
+
+\setcounter{row}{1}
+
+\setrow { }{ }{ } { }{ }{ } {5}{4}{ }
+\setrow { }{ }{ } { }{ }{3} {8}{ }{ }
+\setrow { }{ }{8} {7}{1}{ } { }{2}{ }
+
+\setrow { }{1}{7} {4}{ }{ } { }{8}{ }
+\setrow {4}{ }{ } { }{ }{ } { }{ }{2}
+\setrow { }{ }{ } { }{ }{ } { }{3}{1}
+:
+\setrow {2}{ }{ } {1}{ }{ } { }{6}{ }
+\setrow {7}{ }{ } { }{ }{8} { }{ }{ }
+\setrow { }{6}{3} { }{ }{7} { }{ }{ }
+
+\end{tikzpicture}\end{center}
+
+\vspace{1em}
+}
+
+\end{columns}
+
+\block{Research Area: Practical Techniques for Solving Hard Problems in Parallel}{
+\begin{wrapfigure}[15]{r}{0.38\linewidth}
+    \begin{center}\begin{tikzpicture}
+        \input{gen-graph-speedup}
+    \end{tikzpicture}\end{center}
+\end{wrapfigure}
+
     Combinatorial optimization is, in general, a \textbf{hard problem} (like the famous
     \textbf{travelling salesman problem}): every additional variable we add in can double the
     difficulty of finding a solution, so the time taken to solve a problem grows exponentially. In
@@ -331,17 +425,11 @@ Sudoku puzzles.
 \block[bodyverticalshift=0cm]{}{
     \texttt{c.mccreesh.1@research.gla.ac.uk}
 
-    \flushleft\scriptsize
-    This work was
-    supported by the Engineering and Physical Sciences Research Council [grant number EP/K503058/1].
-
-    \smallskip
+    \flushleft\small
     Photos: Wikimedia ``VIRM6.jpg'' (Maurits90) (cropped), Wikimedia ``Rosetta and Philae at comet
     (11206660686).jpg'' (ESA-C. Carreau/ATG medialab), Wikimedia
     ``A\_bird's\_eye\_view\_of\_Hong\_Kong\_International\_Airport.JPG'' (Wylkie Chan).
 }
-
-\end{columns}
 
 \end{document}
 

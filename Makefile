@@ -3,9 +3,12 @@ all : tables graphs
 
 TABLES =
 
-GRAPHS =
+GRAPHS = gen-graph-speedup.tex
 
 tables : $(TABLES)
 
 graphs : $(GRAPHS)
+
+gen-graph-%.tex : graph-%.gnuplot
+	gnuplot $<
 
