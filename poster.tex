@@ -103,9 +103,10 @@
             \textbf{Combinatorics} is a branch of mathematics devoted to counting and colouring
             things in while respecting certain rules, and \textbf{Combinatorial Optimisation} is
             about finding the ``best'' way to do this. Some important real-world problems can be
-            reduced to combinatorial optimisation problems, which makes them easier to model and
-            solve using computers. Our research investigates exploiting \textbf{multi-core
-            parallelism} to speed up the solving process.
+            expressed as combinatorial optimisation problems, which makes them easier to model and
+            solve using computers. Our research investigates how we can \textbf{exploit parallelism}
+            present in today's multi-core processors to speed up the solving process, or to allow us
+            to tackle larger or more complicated problems in the time we have.
         \end{minipage}
     }
 }
@@ -211,8 +212,8 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
     A \textbf{clique} can be thought of as a group of people, where everyone in the group knows
     everyone else in the group.  Finding cliques lets us select \textbf{as much of a resource as
     possible}, respecting compatibility rules. Clique-finding algorithms have been used to improve
-    the reliability of communications and networking protocols, for social media analysis, for
-    verifying electronic circuits, for targeted advertising, and for controlling flying robots.
+    the reliability of communications and networking protocols, for
+    verifying electronic circuits, for social media analysis, for targeted advertising, and for controlling flying robots.
 
     \medskip
 
@@ -291,14 +292,17 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
     \end{tikzpicture}\end{center}
 \end{wrapfigure}
 
-    The \textbf{subgraph isomorphism} problem is to find a small ``pattern'' graph in a big
-    ``target'' graph. This is useful in drug design, in fraud detection, and in fault diagnosis.
+    Many real-world phenomena, such as social networks, transport routes, financial transactions,
+    and chemical molecules, can be described using graphs. We may wish to \textbf{find interesting
+    structures} inside these graphs. The subgraph isomorphism problem is to find a small ``pattern''
+    graph in a big ``target'' graph. This is useful in drug design, in fraud detection, and in fault
+    diagnosis.
 
-    \vspace{1em}
+    \medskip
 
-    The \textbf{maximum common subgraph} problem finds the largest subgraph common to two bigger
-    graphs. This in turn allows us to see how similar two graphs are. This is useful in computer
-    vision and in biochemistry.
+    We can also \textbf{compare two graphs}. We do this via the maximum common subgraph problem,
+    which is to find the largest subgraph common to two bigger graphs. This is useful in computer
+    vision, database searches, and biochemistry.
 }
 
 
@@ -306,16 +310,16 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
 
 \block{More Flexibility via Constraint Programming}{
     These techniques can be used for \emph{any} system where we have some variables, and some
-    constraints between those variables, and we wish to instantiate the variables whilst respecting
-    all the constraints. This is called \textbf{constraint programming}.  Large-scale industrial
-    successes for constraint programming include:
+    constraints between those variables, and we wish to give values to the variables whilst
+    respecting all the constraints. We may also find a solution which maximises a profit function.
+    This is called \textbf{constraint programming}.  Large-scale industrial successes include:
 
 \begin{itemize}
     \item Timetabling a national railway system.
     \item Improving vehicle delivery routes.
     \item Reducing production costs in lumber processing.
     \item Producing greener and more energy-efficient data centres.
-    \item Scheduling the Rosetta / Philae mission operations.
+    \item Scheduling the Rosetta / Philae comet mission operations.
     \item Automatic test generation.
     \item Reducing waste and improving quality in wine blending.
     \item Reducing the cost of an invasion.
@@ -323,17 +327,17 @@ machinery, radio bandwidth allocation, and reducing the impact of vehicle mainte
     \item Organising sporting seasons for optimal TV coverage.
 \end{itemize}
 
-\vspace{1em}
+\vspace{0.7em}
 
 \begin{center}
-    \includegraphics*[keepaspectratio=true,height=8.5cm]{train.jpg}
+    \includegraphics*[keepaspectratio=true,height=9cm]{train.jpg}
     \hfill
-    \includegraphics*[keepaspectratio=true,height=8.5cm]{comet.jpg}
+    \includegraphics*[keepaspectratio=true,height=9cm]{comet.jpg}
     \hfill
-    \includegraphics*[keepaspectratio=true,height=8.5cm]{airport.jpg}
+    \includegraphics*[keepaspectratio=true,height=9cm]{airport.jpg}
 \end{center}
 
-\vspace{1em}
+\vspace{0.8em}
 
 Constraint programming toolkits are also better than you at solving Sudoku puzzles: groups of
 variables which must be ``all different'' form the core of many interesting applications, and
@@ -381,7 +385,7 @@ network flow algorithms give powerful, efficient inference for these constraints
 
 \end{tikzpicture}\end{center}
 
-\vspace{1em}
+\vspace{0.95em}
 }
 
 \end{columns}
@@ -396,18 +400,19 @@ network flow algorithms give powerful, efficient inference for these constraints
     Combinatorial optimization is, in general, a \textbf{hard problem} (like the famous
     \textbf{travelling salesman problem}): every additional variable we add in can double the
     difficulty of finding a solution, so the time taken to solve a problem grows exponentially. In
-    practice we can usually avoid this worst case, but solving these problems still takes longer
-    than we would like.
+    practice we can usually avoid this worst case by combining strong inference, symmetry breaking,
+    carefully selected heuristics, and intelligent search, while learning from failure.  However,
+    solving these problems can still take longer than we would like.
 
     \medskip
 
     Modern processors have at least two, and sometimes as many as fifteen, processing cores. We
-    might hope that we could use these cores to make our programs \textbf{run faster},
-    or at least to allow us to \textbf{solve larger problems} in the time we have.
+    might hope that we could use these cores to make our programs \textbf{run faster}, or at least
+    to \textbf{solve larger or harder problems} in the time we have.
 
     \medskip
 
-    In general, we do this by splitting problems up into evenly sized, independent pieces of work,
+    In general, we may do this by splitting problems up into evenly sized, independent pieces of work,
     which may be evaluated in parallel. However, combinatorial optimisation
     problems tend to be \textbf{highly irregular} (cannot be split into evenly sized pieces) and
     require \textbf{speculative parallelism} (the pieces have dependencies upon each other, and we
